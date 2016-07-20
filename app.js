@@ -1,18 +1,29 @@
 /*
-Requirements
-It should have a place to store todos
-It should have a way to display todos
-It should have a way to add new todos
-It should have a way to change a todo
-It should have a way to delete a todo
+v2 Requirements
+It should have a function to display todos
+It should have a function to add new todos
+It should have a function to edit todos
+It should have a function to delete todos
 */
 
 var todos = [' item 1', ' item 2', ' item 3'];
-    // adds item to the todo array
-    todos.push(' item 4', ' item 5', 'item deleted');
-    // allows you to edit the array
-    todos[1] = " item 2 changed"
-    // allows you to delete an item from the array
-    todos.splice(5, 1);
 
-console.log("My todos are" + todos + ".");
+// display todos
+function displayTodos() {
+  console.log("My todos are" + todos + ".");
+}
+// add todos
+function addTodos(todo) {
+  todos.push(todo);
+  displayTodos();
+}
+// change todos
+function changeTodos(position, newValue) {
+  todos[position] = newValue;
+  displayTodos();
+}
+// delete todos
+function deleteTodo(position) {
+  todos.splice(position, 1);
+  displayTodos();
+}
