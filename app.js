@@ -1,23 +1,21 @@
 /*
-v4 Requirements
-displayTodos should show todoText
-displayTodos should tell you if todos is empty
-displayTodos should show completed
+v6 Requirements
+toggleAll - if everything is true, make everything false
+toggleAll - Otherwise, make everything true
 */
 
 var todoList = {
   todos: [],
 
   displayTodos: function() {
-    console.log('My todos: ');
     if (this.todos.length === 0) {
-      console.log("Your todo list is empty");
+      console.log("This list is empty");
     } else {
       for (var i = 0; i < this.todos.length; i++) {
         if (this.todos[i].completed === true) {
-          console.log("( X ) ", this.todos[i].todoText);
+          console.log('(X)', this.todos[i].todoText);
         } else {
-          console.log("(  ) ", this.todos[i].todoText);
+          console.log('( )', this.todos[i].todoText);
         }
       }
     }
@@ -46,28 +44,29 @@ var todoList = {
     var todo = this.todos[position];
     todo.completed = !todo.completed;
     this.displayTodos();
-  }
+  },
+
+  toggleAll: function() {
+    var totalTodos = this.todos.length;
+    var completedTodos = 0;
+
+    // Get number of completedTodos
+    for (var i = 0; i < totalTodos; i++) {
+      if(this.todos[i].completed === true) {
+        completedTodos++;
+      }
+    }
+    //if everything is true, make everything false
+    if(completedTodos === totalTodos) {
+      for (var i = 0; i < totalTodos; i++) {
+        this.todos[i].completed = false;
+      }
+    } else {
+      for (var i = 0; i < totalTodos; i++) {
+        this.todos[i].completed = true;
+      }
+    }
+
+    this.displayTodos();
+  },
 };
-
-
-
-
-
-
-
-
-/*
-
-Anki
-
-What is the first thing in a for loop?
-Initialization
-
-What is the second thing in a for loop?
-Condition
-
-What is the last element of a for loop?
-Final Expression
-
-
-*/
