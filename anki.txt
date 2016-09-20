@@ -1,0 +1,16 @@
+JavaScript Data Types
+
+Objects
+  arrays, functions
+Primatives
+  String
+  Number,
+  Boolean
+  Undefined (value that hasn't been set)
+  Null (nothing or empty object)
+
+When you hear programmers talk about references or passed by reference, they're talking about?
+Memory references (objects)
+
+When you hear programmers talk about values or passed by value, they're talking about?
+Primitives (values)

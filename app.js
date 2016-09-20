@@ -1,7 +1,13 @@
 /*
-v6 Requirements
-toggleAll - if everything is true, make everything false
-toggleAll - Otherwise, make everything true
+v7 Requirements
+
+<h1>Vanilla JS - v.7</h1>
+<p>HTML and the DOM</p>
+<p>source: <a href="http://watchandcode.com/courses/practical-javascript/">Practical JavaScript</p>
+
+There should be a displayTodos button and a toggleAll button in the app
+Clicking displayTodos should run todoList.displayTodos
+Clicking toggleAll should run todoList.toggleAll
 */
 
 var todoList = {
@@ -70,3 +76,15 @@ var todoList = {
     this.displayTodos();
   },
 };
+
+var getDisplaysTodo = document.getElementById('displayTodosButton');
+
+displayTodosButton.addEventListener('click', function() {
+  todoList.displayTodos();
+});
+
+var getToggleAll = document.getElementById('toggleAllButton');
+
+toggleAllButton.addEventListener('click', function() {
+  todoList.toggleAll();
+});
