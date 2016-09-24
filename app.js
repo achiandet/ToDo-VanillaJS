@@ -1,15 +1,13 @@
 /*
-v7 Requirements
-
-<h1>Vanilla JS - v.7</h1>
-<p>HTML and the DOM</p>
-<p>source: <a href="http://watchandcode.com/courses/practical-javascript/">Practical JavaScript</p>
-
-There should be a displayTodos button and a toggleAll button in the app
-Clicking displayTodos should run todoList.displayTodos
-Clicking toggleAll should run todoList.toggleAll
+v8 Requirements
+It should have working controls for addTodo
+It should have working controls for changeTodo
+It should have working controls for deleteTodo
+It should have working controls for toggleCompleted
 */
 
+
+// Global object to store todos
 var todoList = {
   todos: [],
 
@@ -27,6 +25,7 @@ var todoList = {
     }
   },
 
+  // methods to store objects in the todos array
   addTodo: function(todoText) {
     this.todos.push({
       todoText: todoText,
@@ -36,7 +35,6 @@ var todoList = {
   },
 
   changeTodo: function(position, todoText) {
-    // this.todos[position] = newValue;
     this.todos[position].todoText = todoText;
     this.displayTodos();
   },
@@ -77,14 +75,38 @@ var todoList = {
   },
 };
 
-var getDisplaysTodo = document.getElementById('displayTodosButton');
-
-displayTodosButton.addEventListener('click', function() {
-  todoList.displayTodos();
-});
-
-var getToggleAll = document.getElementById('toggleAllButton');
-
-toggleAllButton.addEventListener('click', function() {
-  todoList.toggleAll();
-});
+// event handler to manage events
+var handlers = {
+  displayTodos: function() {
+    todoList.displayTodos();
+  },
+  toggleAll: function() {
+    todoList.toggleAll();
+  },
+  addTodo: function() {
+    var addTodoTextInput = document.getElementById('addTodoTextInput');
+    todoList.addTodo(addTodoTextInput.value);
+    addTodoTextInput.value = "";
+  },
+  changeTodo: function() {
+    // gets the value of the position input
+    var changeTodoPositionInput = document.getElementById('changeTodoPositionInput');
+    // gets the value of the text input
+    var changeTodoText = document.getElementById('changeTodoText');
+    // grabs the todolist object, calls changeTodo and passes in the number and text from the input
+    todoList.changeTodo(changeTodoPositionInput.valueAsNumber, changeTodoText.value);
+    // the following two lines just reset the value of the inputs
+    changeTodoPositionInput.value = "";
+    changeTodoText.value = "";
+  },
+  deleteTodo: function() {
+    var deleteTodoPosition = document.getElementById('deleteTodoPosition');
+    todoList.deleteTodo(deleteTodoPosition.valueAsNumber);
+    deleteTodoPosition.value = "";
+  },
+  toggleCompleted: function() {
+    var toggleCompletedPosition = document.getElementById('toggleCompletedPosition');
+    todoList.toggleCompleted(toggleCompletedPosition.valueAsNumber);
+    toggleCompletedPosition.value = '';
+  },
+};
