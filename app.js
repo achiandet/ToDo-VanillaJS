@@ -1,9 +1,8 @@
 /*
-v8 Requirements
-It should have working controls for addTodo
-It should have working controls for changeTodo
-It should have working controls for deleteTodo
-It should have working controls for toggleCompleted
+v9 Requirements
+It should be an li element for every todo
+Each li should contain todoText
+Each li should show completed
 */
 
 
@@ -11,43 +10,25 @@ It should have working controls for toggleCompleted
 var todoList = {
   todos: [],
 
-  displayTodos: function() {
-    if (this.todos.length === 0) {
-      console.log("This list is empty");
-    } else {
-      for (var i = 0; i < this.todos.length; i++) {
-        if (this.todos[i].completed === true) {
-          console.log('(X)', this.todos[i].todoText);
-        } else {
-          console.log('( )', this.todos[i].todoText);
-        }
-      }
-    }
-  },
-
   // methods to store objects in the todos array
   addTodo: function(todoText) {
     this.todos.push({
       todoText: todoText,
       completed: false,
     });
-    this.displayTodos();
   },
 
   changeTodo: function(position, todoText) {
     this.todos[position].todoText = todoText;
-    this.displayTodos();
   },
 
   deleteTodo: function(position) {
     this.todos.splice(position, 1);
-    this.displayTodos();
   },
 
   toggleCompleted: function(position) {
     var todo = this.todos[position];
     todo.completed = !todo.completed;
-    this.displayTodos();
   },
 
   toggleAll: function() {
@@ -70,23 +51,20 @@ var todoList = {
         this.todos[i].completed = true;
       }
     }
-
-    this.displayTodos();
   },
 };
 
 // event handler to manage events
 var handlers = {
-  displayTodos: function() {
-    todoList.displayTodos();
-  },
   toggleAll: function() {
     todoList.toggleAll();
+    view.displayTodos();
   },
   addTodo: function() {
     var addTodoTextInput = document.getElementById('addTodoTextInput');
     todoList.addTodo(addTodoTextInput.value);
     addTodoTextInput.value = "";
+    view.displayTodos();
   },
   changeTodo: function() {
     // gets the value of the position input
@@ -98,15 +76,40 @@ var handlers = {
     // the following two lines just reset the value of the inputs
     changeTodoPositionInput.value = "";
     changeTodoText.value = "";
+    view.displayTodos();
   },
   deleteTodo: function() {
     var deleteTodoPosition = document.getElementById('deleteTodoPosition');
     todoList.deleteTodo(deleteTodoPosition.valueAsNumber);
     deleteTodoPosition.value = "";
+    view.displayTodos();
   },
   toggleCompleted: function() {
     var toggleCompletedPosition = document.getElementById('toggleCompletedPosition');
     todoList.toggleCompleted(toggleCompletedPosition.valueAsNumber);
     toggleCompletedPosition.value = '';
+    view.displayTodos();
   },
+};
+
+// insert li's into the DOM
+var view = {
+  displayTodos: function() {
+    var todosUl = document.querySelector('ul');
+    todosUl.innerHTML = "";
+    for (var i = 0; i < todoList.todos.length; i++) {
+      var todoLi = document.createElement('li');
+      var todo = todoList.todos[i];
+      var todoTextWithCompletion = '';
+
+      if (todo.completed === true) {
+        todoTextWithCompletion = '(x) ' + todo.todoText;
+      } else {
+        todoTextWithCompletion = '( ) ' + todo.todoText;
+      }
+
+      todoLi.textContent = todoTextWithCompletion;
+      todosUl.appendChild(todoLi);
+    }
+  }
 };
