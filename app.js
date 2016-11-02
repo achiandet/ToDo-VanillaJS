@@ -1,8 +1,9 @@
 /*
-v9 Requirements
-It should be an li element for every todo
-Each li should contain todoText
-Each li should show completed
+v10 Requirements
+There should be a way to create delete buttons
+There should be a delete button for each todo
+Each li should have an ide that has the todo position
+Clicking delete should update todoList.todos and the DOM
 */
 
 
@@ -78,10 +79,8 @@ var handlers = {
     changeTodoText.value = "";
     view.displayTodos();
   },
-  deleteTodo: function() {
-    var deleteTodoPosition = document.getElementById('deleteTodoPosition');
-    todoList.deleteTodo(deleteTodoPosition.valueAsNumber);
-    deleteTodoPosition.value = "";
+  deleteTodo: function(position) {
+    todoList.deleteTodo(position);
     view.displayTodos();
   },
   toggleCompleted: function() {
@@ -108,8 +107,31 @@ var view = {
         todoTextWithCompletion = '( ) ' + todo.todoText;
       }
 
+      todoLi.id = i;
       todoLi.textContent = todoTextWithCompletion;
+      todoLi.appendChild(this.createDeleteButton());
       todosUl.appendChild(todoLi);
     }
-  }
+  },
+  createDeleteButton: function() {
+    var deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.className = 'deleteButton';
+    return deleteButton;
+  },
+  setupEventListeners: function() {
+    var todosUl = document.querySelector('ul');
+
+    todosUl.addEventListener('click', function(event) {
+      // get the element that was clicked on
+      var elementClicked = event.target;
+
+      // check if elementClicked is a delete button
+      if (elementClicked.className === 'deleteButton') {
+        handlers.deleteTodo(parseInt(elementClicked.parentNode.id));
+      }
+    });
+  },
 };
+
+view.setupEventListeners();
